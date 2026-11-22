@@ -1,0 +1,14 @@
+A06.jpg: PASS  labelled [(1, 'empty'), (2, 'empty'), (6, 'empty'), (7, 'empty')]  flagged []
+A07.jpg: PASS  labelled [(1, 'empty'), (2, 'empty'), (6, 'empty'), (7, 'empty')]  flagged []
+A08.jpg: PASS  labelled [(4, 'empty'), (5, 'empty'), (9, 'empty'), (10, 'empty')]  flagged []
+A09.jpg: PASS  labelled [(4, 'empty'), (5, 'empty'), (9, 'empty'), (10, 'empty')]  flagged []
+A10.jpg: PASS  labelled [(4, 'empty'), (5, 'empty'), (9, 'empty'), (10, 'empty')]  flagged []
+B04.jpg: PASS  labelled [(4, 'empty'), (5, 'empty'), (9, 'empty'), (10, 'empty')]  flagged []
+B05.jpg: PASS  labelled [(4, 'empty'), (5, 'empty'), (9, 'empty'), (10, 'empty')]  flagged []
+
+strips scored        : 7   strip verdict correct: 0/7
+pockets              : TP 0  FP 0  FN 28  TN 42
+precision / recall   : nan / 0.000   F1 0.000
+false-reject rate    : 0/42 good pockets (0.00 %)
+recall empty         : 0/28
+time per strip       : p50 200 ms, p95 452 ms (this machine)

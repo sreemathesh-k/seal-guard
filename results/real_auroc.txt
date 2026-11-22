@@ -1,0 +1,2 @@
+models/real AUROC 0.796 thr 21.9 good max 18.4 empty median 10.6 empty min 4.1
+models/real_torch AUROC 0.804 thr 208.0 good max 122.2 empty median 100.3 empty min 81.0

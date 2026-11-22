@@ -28,8 +28,9 @@ def severity(defect_type, area_pct):
     return "minor"
 
 
-def enroll(images, rows, cols, out_dir, backend="classic", pte_path=None, folds=5, k=6.0, seed=0):
-    """Learn one product from images of GOOD strips. Returns the meta dict."""
+def enroll(images, rows, cols, out_dir, backend="classic", pte_path=None, folds=5, k=6.0, seed=0, skip=None):
+    """Learn one product from GOOD pockets. skip[n] = pocket numbers (1-based) of
+    image n that are NOT good and must be left out. Returns the meta dict."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     crops, strip_id = [], []
@@ -38,6 +39,8 @@ def enroll(images, rows, cols, out_dir, backend="classic", pte_path=None, folds=
         if strip is None:
             continue
         c = crop_pockets(strip, rows, cols)[0]
+        bad = (skip or {}).get(n, set())
+        c = [x for i, x in enumerate(c) if i + 1 not in bad]
         crops += c
         strip_id += [n] * len(c)
     if len(crops) < 20:
