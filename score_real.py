@@ -25,7 +25,7 @@ ap.add_argument("--out", default="runs/scores.txt")
 args = ap.parse_args()
 
 truth = defaultdict(dict)
-with open(args.labels, newline="", encoding="utf-8") as f:
+with open(args.labels, newline="", encoding="utf-8-sig") as f:
     for r in csv.DictReader(f):
         truth[r["image"].strip()][int(r["pocket"])] = r["defect"].strip()
 
