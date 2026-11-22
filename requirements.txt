@@ -1,0 +1,8 @@
+# core (enough for the classic backend, advice, log and operator screen)
+numpy
+opencv-python-headless
+scikit-learn
+# optional: ResNet18 backend, ExecuTorch export and runtime
+# torch
+# torchvision
+# executorch
