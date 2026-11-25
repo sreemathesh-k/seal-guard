@@ -1,0 +1,41 @@
+I tokenizers:regex.cpp:40] Registering override fallback regex
+I 00:00:00.006002 executorch:cpuinfo_utils.cpp:71] Reading file /sys/devices/soc0/image_version
+I 00:00:00.006445 executorch:cpuinfo_utils.cpp:87] Failed to open midr file /sys/devices/soc0/image_version
+I 00:00:00.006561 executorch:cpuinfo_utils.cpp:167] Number of efficient cores 6
+I 00:00:00.006622 executorch:main.cpp:159] Resetting threadpool with num threads = 2
+I 00:00:00.006677 executorch:cpuinfo_utils.cpp:71] Reading file /sys/devices/soc0/image_version
+I 00:00:00.006765 executorch:cpuinfo_utils.cpp:87] Failed to open midr file /sys/devices/soc0/image_version
+I 00:00:00.006828 executorch:cpuinfo_utils.cpp:167] Number of efficient cores 6
+I 00:00:00.007046 executorch:threadpool.cpp:66] Resetting threadpool to 2 threads.
+I 00:00:00.007111 executorch:runner.cpp:69] Creating LLaMa runner: model_path=model.pte, tokenizer_path=tokenizer.model
+E tokenizers:hf_tokenizer.cpp:167] Error parsing json file: [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - invalid literal; last read: 'I'
+I 00:00:00.181123 executorch:llm_runner_helper.cpp:72] Loaded TikToken tokenizer
+I 00:00:00.181320 executorch:llm_runner_helper.cpp:258] Reading metadata from model
+I 00:00:00.501095 executorch:llm_runner_helper.cpp:137] Metadata: use_sdpa_with_kv_cache = 1
+I 00:00:00.501230 executorch:llm_runner_helper.cpp:137] Metadata: use_kv_cache = 1
+I 00:00:00.501292 executorch:llm_runner_helper.cpp:137] Metadata: get_max_context_len = 2048
+I 00:00:00.501345 executorch:llm_runner_helper.cpp:137] Metadata: get_max_seq_len = 2048
+I 00:00:00.501396 executorch:llm_runner_helper.cpp:137] Metadata: enable_dynamic_shape = 1
+I 00:00:00.501454 executorch:llm_runner_helper.cpp:179] eos_id = 128009
+I 00:00:00.501498 executorch:llm_runner_helper.cpp:179] eos_id = 128001
+I 00:00:00.501547 executorch:llm_runner_helper.cpp:294] Using method: forward
+I 00:00:03.850809 executorch:text_llm_runner.cpp:92] RSS after loading model: 1629.167969 MiB (0 if unsupported)
+Pocket 7 is empty, severity critical. Give the line operator one short action.I 00:00:04.300678 executorch:text_prefiller.cpp:122] Prefill token result numel(): 128256
+ TheI 00:00:04.300978 executorch:text_llm_runner.cpp:208] Max new tokens resolved: 60, given pos_ 17, num_prompt_tokens 17, max_context_len 2048
+I 00:00:04.301001 executorch:text_llm_runner.cpp:231] RSS after prompt prefill: 1629.167969 MiB (0 if unsupported)
+ line operator is responsible for the following actions:
+* The line operator is responsible for the following actions:
+* The line operator is responsible for the following actions:
+* The line operator is responsible for the following actions:
+* The line operator is responsible for the following actions:
+* The line operator isI 00:00:09.050210 executorch:text_llm_runner.cpp:261] RSS after finishing text generation: 1629.167969 MiB (0 if unsupported)
+I 00:00:09.050235 executorch:text_llm_runner.cpp:264] Max new tokens 60 reached!
+ responsibleI 00:00:09.050262 executorch:stats.h:179] 	Prompt Tokens: 17    Generated Tokens: 59
+I 00:00:09.050266 executorch:stats.h:185] 	Model Load Time:		3.349000 (seconds)
+I 00:00:09.050269 executorch:stats.h:194] 	Total inference time:		5.199000 (seconds)		 Rate: 	11.348336 (tokens/second)
+I 00:00:09.050272 executorch:stats.h:203] 		Prompt evaluation:	0.450000 (seconds)		 Rate: 	37.777778 (tokens/second)
+I 00:00:09.050275 executorch:stats.h:215] 		Generated 59 tokens:	4.749000 (seconds)		 Rate: 	12.423668 (tokens/second)
+I 00:00:09.050277 executorch:stats.h:223] 	Time to first generated token:	0.450000 (seconds)
+I 00:00:09.050279 executorch:stats.h:230] 	Sampling time over 76 tokens:	0.019000 (seconds)
+
+PyTorchObserver {"prefill_token_per_sec":37.7778,"decode_token_per_sec":12.4237,"prompt_tokens":17,"generated_tokens":59,"model_load_start_ms":1795625648061,"model_load_end_ms":1795625651410,"inference_start_ms":1795625651410,"inference_end_ms":1795625656609,"model_execution_start_ms":1795625656525,"model_execution_end_ms":1795625656609,"prompt_eval_end_ms":1795625651860,"first_token_ms":1795625651860,"aggregate_sampling_time_ms":19,"aggregate_model_execution_time_ms":5173,"SCALING_FACTOR_UNITS_PER_SECOND":1000}

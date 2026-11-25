@@ -70,4 +70,4 @@ Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8 file from huggingface.co/executorch-com
 
 Built with Llama.
 
-Technical report: `docs/SealGuard_Phase1_Report.pdf`. Demo video: https://youtu.be/Ue5aMOEQu6A
+Technical report: `docs/SealGuard_Phase1_Report.pdf`. Demo video: https://youtu.be/KLnRrnbry9Y
