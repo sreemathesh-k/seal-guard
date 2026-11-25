@@ -5,3 +5,6 @@ runs/
 logs/
 __pycache__/
 *.pyc
+*.bak_*
+/main
+demo_clean.sh

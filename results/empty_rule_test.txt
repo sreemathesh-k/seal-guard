@@ -1,0 +1,2 @@
+FROZEN RULE  V_std > 10.0 or edges > 5.0  (chosen on 8 train photos)
+TEST  empties caught 22 / 28    good pockets flagged 11 / 42

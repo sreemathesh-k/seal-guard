@@ -5,7 +5,7 @@ Photos are matched by an 8x8 grey thumbnail, so file names do not matter.
 Strip A = 10-pocket PARACIP strip, plain foil; strip B = same product, printed foil.
 Every strip has 4 empty pockets (tablets removed): those are the labelled defects.
 
-    python pilot_sort.py --src /mnt/c/Users/acer/Desktop/SealGuard_photos/all --out data/real
+    python pilot_sort.py --src <folder with your photos> --out data/real
 """
 import argparse
 import shutil
