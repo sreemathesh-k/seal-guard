@@ -62,15 +62,3 @@ invented pockets and was blocked, so the template was used. First token 2.7-3.6 
 (reproduce: `PYTHONPATH=. python llama_passrate.py`). Not yet measured on a Raspberry Pi 5.
 
 Built with Llama.
-
-## Llama advice through ExecuTorch (measured 25 Nov 2026)
-
-Llama 3.2 1B Instruct (SpinQuant INT4, pre-exported `.pte` from
-huggingface.co/executorch-community/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8-ET) runs through
-ExecuTorch `llama_main`, built from pytorch/executorch release/1.5 with XNNPACK. Measured on an
-x86 laptop CPU, not Arm: 5 of 6 fact tables gave a reply that passed the fact check; the sixth
-invented pockets and was blocked, so the template was used. First token 2.7-3.6 s, decode
-13.6-14.8 tok/s. Raw output: `results/llama_passrate.txt`
-(reproduce: `PYTHONPATH=. python llama_passrate.py`). Not yet measured on a Raspberry Pi 5.
-
-Built with Llama.
