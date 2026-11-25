@@ -42,7 +42,7 @@ Real strips (dark matte background, whole strip in view, fixed light):
 ## Status
 
 Results, targets and limits are in the technical report. Synthetic-strip numbers only show the
-code works; they are not accuracy claims. Not yet done: Llama on the device, Raspberry Pi timing,
+code works; they are not accuracy claims. Not yet done: Raspberry Pi timing,
 real-strip accuracy.
 
 ## Licences
@@ -50,3 +50,15 @@ real-strip accuracy.
 Code dependencies: NumPy, scikit-learn (BSD-3), OpenCV (Apache 2.0), optional PyTorch/ExecuTorch
 (BSD). MVTec AD is non-commercial (CC BY-NC-SA 4.0) and is not included. Llama 3.2 is under the
 Llama 3.2 Community License; weights are not included.
+
+## Llama advice through ExecuTorch (measured 25 Nov 2026)
+
+Llama 3.2 1B Instruct (SpinQuant INT4, pre-exported `.pte` from
+huggingface.co/executorch-community/Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8-ET) runs through
+ExecuTorch `llama_main`, built from pytorch/executorch release/1.5 with XNNPACK. Measured on an
+x86 laptop CPU, not Arm: 5 of 6 fact tables gave a reply that passed the fact check; the sixth
+invented pockets and was blocked, so the template was used. First token 2.7-3.6 s, decode
+13.6-14.8 tok/s. Raw output: `results/llama_passrate.txt`
+(reproduce: `PYTHONPATH=. python llama_passrate.py`). Not yet measured on a Raspberry Pi 5.
+
+Built with Llama.

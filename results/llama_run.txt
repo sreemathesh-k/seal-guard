@@ -1,0 +1,4 @@
+verdict : FAIL
+advice  : Reject this strip: pocket 2 anomaly (critical), pocket 5 anomaly (critical), pocket 7 anomaly (major), pocket 9 wrong colour (critical). Next: inspect the pocket by eye and record what you see; quarantine the batch and check for product mix-up.
+source  : template   check: LLM reply rejected: leaves out failed pockets: [7]   time: 22793 ms
+logged  : logs/sealguard.csv  hash 53d49bc9ba09...

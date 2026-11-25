@@ -36,8 +36,9 @@ def build_prompt(facts):
              for p in failed_pockets(facts)]
     return ("You assist a pharmaceutical packaging operator. A blister strip FAILED inspection.\n"
             "Facts (use only these; do not add pockets, defects or numbers):\n- " + "\n- ".join(lines) +
-            "\nIn at most 3 short sentences: say the strip must be rejected, name each failed pocket "
-            "and its defect, and give one practical check for the line.")
+            "\nFirst say the strip must be rejected. Then write one short sentence for each failed pocket, "
+            "naming the pocket number, its defect and its severity exactly as given. "
+            "End with one practical check for the line.")
 
 
 def template_advice(facts):
@@ -62,11 +63,22 @@ def fact_check(text, facts):
     if any(c in low for c in FINE_CLAIMS):
         return False, "claims the strip is fine"
     mentioned = {int(n) for n in re.findall(r"pockets?\s*(?:no\.?|number|#)?\s*(\d+)", low)}
-    mentioned |= {int(n) for grp in re.findall(r"pockets?\s+((?:\d+\s*(?:,|and|&)\s*)+\d+)", low) for n in re.findall(r"\d+", grp)}
+    mentioned |= {int(n) for grp in re.findall(r"pockets?\s+((?:\d+\s*(?:,\s*and|,|and|&)\s*)+\d+)", low) for n in re.findall(r"\d+", grp)}
     if mentioned - allowed:
         return False, f"mentions pockets not in the facts: {sorted(mentioned - allowed)}"
     if allowed - mentioned:
         return False, f"leaves out failed pockets: {sorted(allowed - mentioned)}"
+    sev = {int(p["pocket"]): (p.get("severity") or "").lower() for p in bad}
+    for sent in re.split(r"(?<=[.!?;])\s+|\n+", low):
+        said = set(re.findall(r"\b(critical|major|minor)\b", sent))
+        if len(said) != 1:
+            continue
+        s1 = said.pop()
+        nums = {int(n) for n in re.findall(r"pockets?\s*(?:no\.?|number|#)?\s*(\d+)", sent)}
+        nums |= {int(n) for g in re.findall(r"pockets?\s+((?:\d+\s*(?:,\s*and|,|and|&)\s*)+\d+)", sent) for n in re.findall(r"\d+", g)}
+        wrong = sorted(n for n in nums if sev.get(n) and sev[n] != s1)
+        if wrong:
+            return False, f"states severity {s1} for pockets {wrong}, the facts disagree"
     types = {p.get("type") or "anomaly" for p in bad}
     for t, words in DEFECT_WORDS.items():
         if t in types or t == "anomaly":
@@ -97,20 +109,44 @@ class MockLLM:
 
 
 class ExecuTorchLlama:
-    """Calls the ExecuTorch llama_main runner. Flags follow the ExecuTorch 1.5 Raspberry Pi tutorial;
-    confirm with `llama_main --help` on your build."""
+    """Runs Llama 3.2 1B Instruct through the ExecuTorch llama_main runner.
+    Flags confirmed with `llama_main --help` on our ExecuTorch release/1.5 build.
+    Wraps the prompt in the Llama 3 chat format, keeps only the assistant reply,
+    and keeps the runner's own timing line (PyTorchObserver) in self.stats."""
 
     name = "llama"
+    SYSTEM = ("You are a quality-control assistant for blister-pack inspection. "
+              "Use only the facts given. Do not invent pocket numbers, values or defect types.")
 
-    def __init__(self, runner, model, tokenizer, seq_len=128, timeout=60):
-        self.cmd = [runner, "--model_path", model, "--tokenizer_path", tokenizer, "--seq_len", str(seq_len)]
+    def __init__(self, runner, model, tokenizer, seq_len=128, timeout=120, max_new_tokens=120):
+        # seq_len is kept so older callers still work; the runner marks it deprecated,
+        # so we cap the reply with --max_new_tokens instead.
+        self.cmd = [runner, "--model_path", model, "--tokenizer_path", tokenizer,
+                    "--max_new_tokens", str(max_new_tokens), "--temperature", "0"]
         self.timeout = timeout
+        self.stats = None
+
+    def chat(self, prompt):
+        return ("<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n" + self.SYSTEM +
+                "<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n" + prompt +
+                "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n")
 
     def __call__(self, prompt, facts):
-        out = subprocess.run(self.cmd + ["--prompt", prompt], capture_output=True, text=True, timeout=self.timeout)
-        text = out.stdout
-        if prompt in text:                      # the runner echoes the prompt before its answer
-            text = text.split(prompt, 1)[1]
+        import json
+        out = subprocess.run(self.cmd + ["--prompt", self.chat(prompt)],
+                             capture_output=True, text=True, timeout=self.timeout)
+        text = out.stdout + "\n" + out.stderr
+        for line in text.splitlines():
+            if line.startswith("PyTorchObserver "):
+                try:
+                    self.stats = json.loads(line.split(" ", 1)[1])
+                except ValueError:
+                    pass
+        marker = "<|start_header_id|>assistant<|end_header_id|>"
+        if marker not in text:
+            return ""                     # no reply found -> advise() falls back to the template
+        text = text.rsplit(marker, 1)[1]
+        text = text.split("<|eot_id|>", 1)[0].split("PyTorchObserver", 1)[0]
         return text.strip()
 
 

@@ -1,0 +1,13 @@
+--- e2e defect strip: PASS (ok) call 23815 ms, first token 3515 ms, 62 tokens, decode 14.0 tok/s
+The strip must be rejected. |  | Pocket 2: Anomaly, severity critical | Pocket 5: Anomaly, severity critical | Pocket 7: Anomaly, severity major | Pocket 9: Wrong colour, severity critical |  | Practical check: Check the colour of the blister strip against the packaging label.
+--- two empty: PASS (ok) call 19132 ms, first token 3040 ms, 43 tokens, decode 14.1 tok/s
+The strip must be rejected. |  | Pocket 4: empty, severity critical | Pocket 8: empty, severity critical |  | Practical check: Check the strip's packaging for any visible signs of damage or irregularities.
+--- one minor anomaly: FAIL (mentions pockets not in the facts: [2, 3, 4, 5]) call 12716 ms, first token 2780 ms, 80 tokens, decode 13.6 tok/s
+The strip must be rejected. |  | Pocket 1: Anomaly, Severity minor | Pocket 2: Defect, Severity minor | Pocket 3: Defect, Severity minor | Pocket 4: Anomaly, Severity minor | Pocket 5: Defect, Severity minor | Practical check: Check the strip's seal by gently pressing the top edge of the blister strip against the packaging material.
+--- colour + anomaly: PASS (ok) call 9674 ms, first token 3641 ms, 39 tokens, decode 14.4 tok/s
+The strip must be rejected. |  | Pocket 3: wrong colour, severity critical | Pocket 6: anomaly, severity major |  | Practical check: Check the strip's colour against the packaging instructions.
+--- last pocket empty: PASS (ok) call 8915 ms, first token 2703 ms, 45 tokens, decode 14.8 tok/s
+The strip must be rejected. |  | The strip failed in pocket 10, with a defect of empty and severity critical. |  | To check the line, I will inspect the strip's packaging for any visible signs of damage or irregularities.
+--- three mixed: PASS (ok) call 11684 ms, first token 3368 ms, 64 tokens, decode 14.1 tok/s
+The strip must be rejected. |  | Pocket 2: pocket 2, anomaly, severity major | Pocket 5: pocket 5, anomaly, severity minor | Pocket 9: pocket 9, empty, severity critical |  | Practical check: Check the strip's packaging for any visible signs of damage or irregularities.
+PASS RATE: 5/6 fact tables (temperature 0, x86 laptop CPU, not Arm)
