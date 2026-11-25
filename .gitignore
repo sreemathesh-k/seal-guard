@@ -8,3 +8,6 @@ __pycache__/
 *.bak_*
 /main
 demo_clean.sh
+*.bak_*
+/main
+demo_clean.sh
