@@ -69,3 +69,5 @@ License; weights are not included. The Llama `.pte` we ran is the pre-exported
 Llama-3.2-1B-Instruct-SpinQuant_INT4_EO8 file from huggingface.co/executorch-community.
 
 Built with Llama.
+
+Technical report: `docs/SealGuard_Phase1_Report.pdf`. Demo video: https://youtu.be/Ue5aMOEQu6A
